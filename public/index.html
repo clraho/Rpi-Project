@@ -1,34 +1,28 @@
 <!DOCTYPE html>
+<html lang="fr">
 <head>
     <meta charset="utf-8" />
     <title>Raspberry Pi</title>
-    <script src = "index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
 </head>
 <body>
-    <script type="module">
-        import { createApp, ref } from 'vue'
-        
-        createApp({
-          setup() {
-            // A "ref" is a reactive data source that stores a value.
-            // Technically, we don't need to wrap the string with ref()
-            // in order to display it, but we will see in the next
-            // example why it is needed if we ever intend to change
-            // the value.
-            const message = ref('Hello World!')
-        
-            return {
-              message
-            }
-          }
-        }).mount('#app')
-        </script>
-        
-        <div id="app">
-          <h1>{{ message }}</h1>
-        </div>
-    <label>Entrez une commande</label>
-    <input type="text" id="cmd"/>
-</body>
+    <div id="app">
+        <h1>Raspberry Pi</h1>
+        <input v-model="txt" /> 
+    </div>
 
+    <script type="module">
+        const { createApp, ref } = Vue;
+
+        createApp({
+            setup() {
+                const txt = ref('Entrez une commande');
+
+                return {
+                    txt
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
 </html>
