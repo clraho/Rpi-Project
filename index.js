@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
 
 app.post('/update-ip', (req, res) => {
   const { ip } = req.body;
-  connectedRaspberries.set(ip, Date.now());   //date.now permet d'avoir le timestamp du moment où on a une requête
+  connectedRaspberries.set(ip, Date.now());   //date.now permet d'avoir le timestamp du moment où on a une requête, -> utiliser le timestamp pour calculer si au bout de 2 minutes le rasp n'envoie plus de requetes
   console.log(`IP du Raspberry mise à jour : ${ip}`);
   console.log(connectedRaspberries);
   res.send('OK');
