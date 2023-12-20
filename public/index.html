@@ -8,19 +8,39 @@
 <body>
     <div id="app">
         <h1>Raspberry Pi</h1>
-        <input v-model="txt" /> 
+        <div>
+            <a href="/raspberry-status">Liste raspberry</a>
+            <ul id="raspberryList"></ul>
+        </div>
     </div>
 
     <script type="module">
-        const { createApp, ref } = Vue;
+        const { createApp, ref, onMounted } = Vue;
 
         createApp({
             setup() {
-                const txt = ref('Entrez une commande');
+                const raspberryList = ref([]);
 
-                return {
-                    txt
+                // Fonction pour mettre à jour la liste des Raspberry Pi
+                const updateRaspberryList = async () => {
+                    try {
+                        const response = await fetch('/raspberry-status');
+                        const data = await response.json();
+                        raspberryList.value = data.raspberries;
+                    } catch (error) {
+                        console.error('Erreur lors de la récupération de l\'état des Raspberry Pi', error.message);
+                    }
                 };
+
+                // Mettre à jour la liste au chargement de la page
+                onMounted(() => {
+                    updateRaspberryList();
+                });
+
+                // Mettre à jour la liste toutes les 30 secondes
+                setInterval(updateRaspberryList, 30000);
+
+                return { raspberryList };
             }
         }).mount('#app');
     </script>
